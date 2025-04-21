@@ -1,0 +1,66 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="registro-form">
+  <div class="form-group">
+    <label for="nombres">Nombre(s):</label>
+    <input type="text" id="nombres" formControlName="nombres" />
+    <div class="error-message" *ngIf="form.get('nombres')?.invalid && form.get('nombres')?.touched">
+      El nombre es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="apellidoPaterno">Apellido Paterno:</label>
+    <input type="text" id="apellidoPaterno" formControlName="apellidoPaterno" />
+    <div class="error-message" *ngIf="form.get('apellidoPaterno')?.invalid && form.get('apellidoPaterno')?.touched">
+      El apellido paterno es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="apellidoMaterno">Apellido Materno:</label>
+    <input type="text" id="apellidoMaterno" formControlName="apellidoMaterno" />
+    <div class="error-message" *ngIf="form.get('apellidoMaterno')?.invalid && form.get('apellidoMaterno')?.touched">
+      El apellido materno es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" />
+    <div class="error-message" *ngIf="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched">
+      La fecha de nacimiento es obligatoria.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="tipoCuenta">Tipo de Cuenta:</label>
+    <select id="tipoCuenta" formControlName="tipoCuenta">
+      <option value="" disabled selected>Selecciona un tipo</option>
+      <option>Cuenta Profesional</option>
+      <option>Cuenta Cliente</option>
+    </select>
+    <div class="error-message" *ngIf="form.get('tipoCuenta')?.invalid && form.get('tipoCuenta')?.touched">
+      Debes seleccionar un tipo de cuenta.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" id="email" formControlName="email" />
+    <div class="error-message" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+      Ingresa un correo electrónico válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" formControlName="password" />
+    <div class="error-message" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+      La contraseña debe tener entre 8 y 15 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" [disabled]="form.invalid">Sign Up</button>
+  </div>
+</form>
+
