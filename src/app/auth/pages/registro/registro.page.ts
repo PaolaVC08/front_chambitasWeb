@@ -25,7 +25,7 @@ export class RegistroPage {
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   onSubmit() {
-      if (this.form.invalid){
+      if (this.form.valid){
         this.authService.registrar(this.form.value).subscribe({
         next: res => {
           console.log('Registro exitoso', res);
