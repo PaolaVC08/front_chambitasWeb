@@ -1,4 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
+/* Fondo general con imagen */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('assets/fondo-estrellas.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+.main-container {
+  display: flex;
+  justify-content: flex-start; /* Alinea a la izquierda */
+  align-items: center;
+  min-height: 100vh;
+  padding-left: 5vw; /* Ajusta este valor según lo que veas visualmente mejor */
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Contenedor del formulario */
+.registro-form {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  border-radius: 40px;
+  width: 700px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Etiquetas */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Campos de entrada */
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #8f4cf4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #a76bf6;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #ff6b6b;
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+.full-name-row label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.name-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.name-inputs input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
