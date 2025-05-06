@@ -46,13 +46,13 @@ form = this.fb.group({
           console.log('Registro exitoso', res);
           alert("Registro exitoso");
 
-          if (userRequestDTO.tipoUsuario === 'PROFESIONISTA') {
+          /*if (userRequestDTO.tipoUsuario === 'PROFESIONISTA') {
             alert("Dirigiendo al registro profesionista");
               //this.router.navigate(['/registro-profesional']);
           } else {
              alert("Dirigiendo al login");
              this.router.navigate(['/login']);
-          }
+          }*/
         },
         error: err => {
           console.error('Error en el registro', err);
