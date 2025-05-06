@@ -30,18 +30,17 @@ form = this.fb.group({
      if (this.form.valid) {
 
       const formValue = this.form.value;
-
-      const userRequestDTO = {
-        nombre: formValue.nombre,
+        const userRequestDTO = {
+        username: formValue.nombre,
         apellidoPaterno: formValue.apellidoPaterno,
         apellidoMaterno: formValue.apellidoMaterno,
         fechaNacimiento: formValue.fechaNacimiento,
-        correo: formValue.correo,
-        contraseña: formValue.contraseña,
-        tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',
-        fotoPerfilB64: ''
+        email: formValue.correo,
+        password: formValue.contraseña,
+        //tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',
+        //fotoPerfilB64: ''
       };
-
+      
       this.authService.signup(userRequestDTO).subscribe({
         next: res => {
           console.log('Registro exitoso', res);

@@ -26,8 +26,8 @@ export class LoginPage {
   onSubmit() {
     if (this.form.valid) {
       const loginData = {
-      correo: this.form.value.correo!,
-      contraseña: this.form.value.contraseña!
+      email: this.form.value.correo!,
+      password: this.form.value.contraseña!
     };
         this.authService.login(loginData).subscribe({
         next: res => {
