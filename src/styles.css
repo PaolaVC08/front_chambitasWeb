@@ -1,12 +1,16 @@
 /* Fondo general con imagen */
+* {
+  font-family: 'Catamaran', sans-serif;
+}
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  
   background: url('assets/fondo-estrellas.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
 }
 .main-container {
+  margin-top: 50px;
   display: flex;
   justify-content: flex-start; /* Alinea a la izquierda */
   align-items: center;
@@ -16,59 +20,71 @@ body {
 
 /* Contenedor del formulario */
 .registro-form {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 40px;
   border-radius: 40px;
-  width: 700px;
+  width: 1000px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Etiquetas */
 label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 200 !important;
 }
 
 /* Campos de entrada */
 input,
 select {
-  width: 100%;
+    width: fit-content;
+  min-width: 200px;
+  max-width: 100%;
   padding: 10px;
   border: none;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 22px;
   margin-bottom: 20px;
   box-sizing: border-box;
 }
 
 /* Botón */
-button {
-  width: 100%;
-  padding: 12px;
+.custom-btn {
+  width: auto;
+  min-width: 120px;
+  padding: 10px 30px;
   background-color: #8f4cf4;
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
+  border: 2px solid white;
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+  display: inline-block;
+  text-align: center;
 }
 
-button:hover:not(:disabled) {
+.custom-btn:hover:not(:disabled) {
   background-color: #a76bf6;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  transform: scale(1.03);
 }
 
-button:disabled {
+.custom-btn:disabled {
   background-color: #999;
+  border-color: #ccc;
   cursor: not-allowed;
+  box-shadow: none;
 }
+
 
 /* Mensajes de error */
 .error-message {
   color: #ff6b6b;
-  font-size: 13px;
+  font-size: 20px;
   margin-top: -15px;
   margin-bottom: 10px;
 }
@@ -88,3 +104,68 @@ button:disabled {
   margin-bottom: 0;
 }
 
+h1 {
+  font-family: 'Catamaran', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+p {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 200 !important;
+}
+.topbar {
+  width: 100%;
+  height: 66px;
+  background-color: rgba(0, 0, 0, 0.6); /* semitransparente */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+  position: fixed; /* para que se quede arriba */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #c088ff;
+}
+
+.logo span {
+  color: white;
+  font-weight: 400;
+}
+
+.nav-links a {
+  margin-left: 30px;
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 20px;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #c088ff;
+}
+
+.login-redirect {
+  margin-top: 20px; /* separación respecto al botón */
+  text-align: center;
+  font-size: 15px;
+}
+
+.login-redirect a {
+  color: #c088ff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.login-redirect a:hover {
+  color: #e0b4ff;
+}

@@ -1,3 +1,10 @@
+<header class="topbar">
+  <div class="logo">Chambitas<span>Web</span></div>
+  <nav class="nav-links">
+    <a routerLink="/">About</a>
+    <a routerLink="/">Support</a>
+  </nav>
+</header>
 <div class="main-container">
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="registro-form">
   <div class="header">
@@ -5,8 +12,7 @@
   <p>Únete a nuestra comunidad para encontrar al<br> profesional que necesites cuando lo necesites.</p>
 </div>
   <div class="form-group full-name-row">
-  <label>Nombre completo:</label>
-  <div class="name-inputs">
+   <div class="name-inputs">
     <input type="text" placeholder="Nombre(s)" formControlName="nombre" />
     <input type="text" placeholder="Apellido paterno" formControlName="apellidoPaterno" />
     <input type="text" placeholder="Apellido materno" formControlName="apellidoMaterno" />
@@ -31,9 +37,8 @@
   </div>
 
   <div class="form-group">
-    <label for="tipoUsuario">Tipo de Cuenta:</label>
     <select id="tipoUsuario" formControlName="tipoUsuario">
-      <option value="" disabled selected>Selecciona un tipo</option>
+      <option value="" disabled selected>Selecciona un tipo de Usuario</option>
       <option>Cuenta Profesional</option>
       <option>Cuenta Cliente</option>
     </select>
@@ -43,23 +48,29 @@
   </div>
 
   <div class="form-group">
-    <label for="correo">Correo Electrónico:</label>
-    <input type="email" id="correo" formControlName="correo" />
+    <input type="email" placeholder="Correo electrónico" id="correo" formControlName="correo" />
     <div class="error-message" *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
       Ingresa un correo electrónico válido.
     </div>
   </div>
 
   <div class="form-group">
-    <label for="contraseña">Contraseña:</label>
-    <input type="password" id="contraseña" formControlName="contraseña" />
+    
+    <input type="password" placeholder="Contraseña" id="contraseña" formControlName="contraseña" />
     <div class="error-message" *ngIf="form.get('contraseña')?.invalid && form.get('contraseña')?.touched">
       La contraseña debe tener entre 8 y 15 caracteres, con letras y números.
     </div>
   </div>
 
   <div class="form-group">
-    <button type="submit" [disabled]="form.invalid">Registrarse</button>
+      <button type="submit" class="custom-btn" [disabled]="form.invalid">Sign Up</button>
   </div>
+
+  <div class="login-redirect">
+      <p>¿Ya tienes una cuenta?
+    <a routerLink="/login">Inicia sesión</a>
+      <p>
+  </div>
+
 </form>
 </div>

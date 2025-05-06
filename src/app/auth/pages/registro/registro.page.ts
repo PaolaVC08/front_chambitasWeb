@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-registro',
@@ -17,13 +17,15 @@ form = this.fb.group({
     apellidoPaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
     apellidoMaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
     fechaNacimiento: ['', Validators.required],
-    tipoUsuario: ['', Validators.required],  // Antes: tipoCuenta
+    tipoUsuario: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
     contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/)]]
   });
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
-
+  constructor(private fb: FormBuilder, 
+              private authService: AuthService,
+              private router: Router)
+             {}
   onSubmit() {
      if (this.form.valid) {
 
@@ -40,7 +42,7 @@ form = this.fb.group({
         fotoPerfilB64: ''
       };
 
-      this.authService.registrar(userRequestDTO).subscribe({
+      this.authService.signup(userRequestDTO).subscribe({
         next: res => {
           console.log('Registro exitoso', res);
           alert("Registro exitoso");
@@ -50,7 +52,7 @@ form = this.fb.group({
               //this.router.navigate(['/registro-profesional']);
           } else {
              alert("Dirigiendo al login");
-             //this.router.navigate(['/login']);
+             this.router.navigate(['/login']);
           }
         },
         error: err => {

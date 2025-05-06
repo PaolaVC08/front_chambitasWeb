@@ -17,9 +17,13 @@ export interface SignUpRequest {
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://localhost:8080/api/auth/users';
   constructor(private http: HttpClient) { }
-    registrar(userData: any): Observable<any> {
+    
+  signup(userData: any): Observable<any> {
     return this.http.post(this.apiUrl, userData);
   }
+  login(credentials: { correo: string; contraseña: string }) {
+    return this.http.post(this.apiUrl, credentials);
+    }
 }
