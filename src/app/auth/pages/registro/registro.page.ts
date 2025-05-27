@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopbarPage],
   templateUrl: './registro.page.html',
   styleUrl: './registro.page.css'
 })
 export class RegistroPage {
-    
+ 
+ngOnInit() {
+    document.body.classList.add('auth-background');
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('auth-background');
+  }
+
 form = this.fb.group({
     nombre: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+( [A-Z][a-z]+)*$/)]],
     apellidoPaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
@@ -41,10 +50,17 @@ form = this.fb.group({
         //fotoPerfilB64: ''
       };
       
+      
+//            this.router.navigate(['/email-verification']);
+   
+
       this.authService.signup(userRequestDTO).subscribe({
         next: res => {
           console.log('Registro exitoso', res);
-          alert("Registro exitoso");
+          alert("Registro exitoso. Redirigiendo a verificacion de correo...");
+          setTimeout(() => {
+            this.router.navigate(['/email-verification']);
+          }, 3000); 
 
           /*if (userRequestDTO.tipoUsuario === 'PROFESIONISTA') {
             alert("Dirigiendo al registro profesionista");

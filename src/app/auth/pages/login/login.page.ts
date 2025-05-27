@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-
+import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopbarPage],
   templateUrl: './login.page.html',
   styleUrl: './login.page.css'
 })
 export class LoginPage {
+
+    ngOnInit() {
+    document.body.classList.add('auth-background');
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('auth-background');
+  }
+
     form = this.fb.group({
     correo: ['', [Validators.required, Validators.email]],
     contraseña: ['', Validators.required]

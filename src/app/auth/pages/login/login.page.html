@@ -1,10 +1,4 @@
-<header class="topbar">
-  <div class="logo">Chambitas<span>Web</span></div>
-  <nav class="nav-links">
-    <a routerLink="/">About</a>
-    <a routerLink="/">Support</a>
-  </nav>
-</header>
+<app-topbar></app-topbar>
 
 <div class="main-container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="registro-form">
@@ -38,7 +32,7 @@
 
     <div class="login-redirect">
       <p>¿Aún no estás registrado?
-        <a routerLink="/registro">Crea una cuenta</a>
+        <a routerLink="/signup">Crea una cuenta</a>
       </p>
     </div>
 

@@ -1,0 +1,45 @@
+<div class="main-layout-container">
+  <aside class="main-layout-sidebar">
+    <div class="main-layout-logo">Chambitas<span>Web</span></div>
+
+    <nav class="main-layout-nav">
+      <ul>
+        <li routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="material-icons">home</span>
+          <span>Home</span>
+        </li>
+        <li routerLink="/search" routerLinkActive="active">
+          <span class="material-icons">search</span>
+          <span>Search</span>
+        </li>
+        <li routerLink="/profile" routerLinkActive="active">
+          <span class="material-icons">person</span>
+          <span>Profile</span>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="main-layout-favorites">
+      <div class="favorites-header">
+        <span class="material-icons">inventory_2</span>
+        <h3>Favoritos</h3>
+      </div>
+      <ul class="favorites-list">
+        <li *ngFor="let fav of favoritos">
+          <span class="material-icons">person</span>
+          <span>{{ fav }}</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-layout-content">
+    <header class="main-layout-topbar">
+      <input type="text" placeholder="Search..." />
+    </header>
+
+    <section class="page-view">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
