@@ -1,4 +1,33 @@
 <div class="home-container">
-  <h2>Bienvenido a ChambitasWeb</h2>
-  <p>Aquí aparecerán las categorías destacadas.</p>
+  <div class="categoria-filtros">
+    <label>
+      Categoria:
+      <select>
+        <option>Todos</option>
+        <option>Hogar y Reparaciones</option>
+        <option>Salud y Belleza</option>
+      </select>
+    </label>
+    <label>
+      Zona:
+      <select>
+        <option>Todos</option>
+        <option>Zona 1</option>
+        <option>Zona 2</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="categorias-lista">
+    <div *ngFor="let cat of categorias" class="categoria-block">
+      <h3 class="categoria-nombre">{{ cat.nombre }}</h3>
+
+      <div class="profesiones-carrusel">
+        <div *ngFor="let prof of cat.profesiones" class="profesion-item">
+          <div class="profesion-circle"></div>
+          <span class="profesion-nombre">{{ prof }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -225,7 +225,6 @@ app-search-bar .search-bar-container .search-bar-btn {
   cursor: pointer;
   font-size: 14px;
 }
-/* ==================== Main Layout ==================== */
 
 .main-layout-container {
   display: flex;
@@ -400,4 +399,137 @@ app-search-bar .search-bar-container .search-bar-btn {
   margin-right: 10px;
   color: #c084fc;
   font-size: 35px;
+}
+.home-container {
+  padding: 1rem 2rem;
+  color: white;
+}
+
+.home-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.categoria-filtros {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.categoria-filtros label {
+  color: #ddd;
+}
+
+.categorias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.categoria-nombre {
+  color: #c084fc;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 4px rgba(52, 31, 64, 0.534);
+  
+}
+
+.profesiones-carrusel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+}
+
+.profesiones-carrusel::-webkit-scrollbar {
+  display: none;
+}
+.profesiones-carrusel {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
+
+.profesion-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  cursor: pointer;
+  margin-right: 1.5rem;
+  flex: 0 0 auto;
+}
+
+.profesion-circle {
+  width: 180px;
+  height: 180px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 0 8px rgba(192, 132, 252, 0.7); /* brillo suave */
+  transition: transform 0.3s ease;
+}
+
+.profesion-nombre {
+  font-size: 25px;
+  text-align: center;
+  color: white;
+}
+select {
+  font-family: 'Catamaran', sans-serif;
+  font-size: 23px;
+  color: white;
+  background-color: #1a1a1a00;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 40px 8px 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3e%3cpolygon points='0,0 10,0 5,6' fill='white'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 15px 10px;
+}
+
+select:hover, select:focus {
+  background-color: #4e276952;
+  outline: none;
+}
+
+option {
+  background-color: #1a1a1a;
+  color: white;
+}
+.page-view {
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Scrollbar para navegadores WebKit (Chrome, Edge, Safari) */
+.page-view::-webkit-scrollbar {
+  width: 8px;
+}
+
+.page-view::-webkit-scrollbar-thumb {
+  background-color: rgba(136, 136, 136, 0.7);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.page-view::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.page-view {
+  scrollbar-width: 10px;
+  scrollbar-color: rgba(92, 92, 92, 0.7) transparent;
 }
