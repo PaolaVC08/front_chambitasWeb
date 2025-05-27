@@ -9,14 +9,14 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage)
       },
-      /*{
-        path: 'search',
-        loadComponent: () => import('./pages/search/search.component').then(m => m.SearchComponent)
+      {
+        path: 'search-page',
+        loadComponent: () => import('./pages/search-page/search-page.page').then(m => m.SearchPagePage)
       },
       {
         path: 'profile',
-        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
-      },*/
+        loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage)
+      },
       {
         path: '',
         redirectTo: 'home',
