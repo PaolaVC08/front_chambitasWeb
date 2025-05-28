@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
 export const routes: Routes = [
-
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
   {
     path: '',
     loadComponent: () => import('./layout/main-layout/main-layout.page').then(m => m.MainLayoutPage),
@@ -24,11 +28,6 @@ export const routes: Routes = [
       }
     ]
   },
-  /*{
-    path: 'home',
-    loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage)
-  },*/
-
     {
     path: 'signup',
     loadComponent: () => import('./auth/pages/registro/registro.page').then(m => m.RegistroPage)
@@ -46,8 +45,7 @@ export const routes: Routes = [
       .then(m => m.EmailVerificationPage)
   },
   {
-    path: '',
-    redirectTo: 'signup',
-    pathMatch: 'full'
+    path: '**',
+    redirectTo: 'login'
   }
 ];

@@ -40,39 +40,27 @@ form = this.fb.group({
 
       const formValue = this.form.value;
         const userRequestDTO = {
-        username: formValue.nombre,
-        apellidoPaterno: formValue.apellidoPaterno,
-        apellidoMaterno: formValue.apellidoMaterno,
+        nombre: formValue.nombre,
+        apPaterno: formValue.apellidoPaterno,
+        apMaterno: formValue.apellidoMaterno,
         fechaNacimiento: formValue.fechaNacimiento,
-        email: formValue.correo,
+        correo: formValue.correo,
         password: formValue.contraseña,
-        //tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',
+        tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',
         //fotoPerfilB64: ''
       };
       
-      
-//            this.router.navigate(['/email-verification']);
-   
-
       this.authService.signup(userRequestDTO).subscribe({
         next: res => {
-          console.log('Registro exitoso', res);
-          alert("Registro exitoso. Redirigiendo a verificacion de correo...");
+          const msg = res.message || 'Registro exitoso. Revisa tu correo.';
+          alert(msg);
           setTimeout(() => {
             this.router.navigate(['/email-verification']);
-          }, 3000); 
-
-          /*if (userRequestDTO.tipoUsuario === 'PROFESIONISTA') {
-            alert("Dirigiendo al registro profesionista");
-              //this.router.navigate(['/registro-profesional']);
-          } else {
-             alert("Dirigiendo al login");
-             this.router.navigate(['/login']);
-          }*/
+          }, 3000);
         },
         error: err => {
-          console.error('Error en el registro', err);
-          alert("Error en el registro");
+          const errorMsg = err.error?.message || 'Error en el registro';
+          alert(errorMsg);
         }
       });
     }
