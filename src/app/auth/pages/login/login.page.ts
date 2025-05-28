@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
@@ -29,7 +29,7 @@ export class LoginPage {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: RouterModule
+    private router: Router
   ) {}
 
   onSubmit() {
@@ -41,7 +41,7 @@ export class LoginPage {
         this.authService.login(loginData).subscribe({
         next: res => {
           alert('Inicio de sesión exitoso');
-          //this.router.navigate(['/home']);
+          this.router.navigate(['/home']);
         },
         error: err => {
           alert('Credenciales incorrectas');
