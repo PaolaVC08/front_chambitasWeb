@@ -29,5 +29,8 @@ export class AuthService {
   reenviarCorreo() {
   return this.http.post(`${this.apiUrl}/resend-token`, {});
 }
+  verificarCorreo(token: string ) {
+  return this.http.post(`${this.apiUrl}/verify?token=${token}`, {});
+  }
 
 }
