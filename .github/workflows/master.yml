@@ -1,7 +1,6 @@
 name: CI/CD deploy master
 
 on:
-#jsh
   push:
     branches:
       - master
