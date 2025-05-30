@@ -1,18 +1,19 @@
-name: CI/CD deploy master
+name: Deploy master
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+  #pull_request:
+    #branches: [ master ]
 
 jobs:
-  build_and_push_docker:
+  angular_deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20.x
         uses: actions/setup-node@v3
         with:
           node-version: '20'
@@ -20,19 +21,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Angular app
-        run: CI=false npm run build
-
-      - name: Build Docker image
+      - name: Build Angular app into docs/
         run: |
-          docker build -t ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:${{ github.sha }} .
+          npm run build -- --output-path=docs
+          # Si tus archivos quedaron en docs/browser, mueve aquí para raíz:
+          if [ -d docs/browser ]; then mv docs/browser/* docs/; fi
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Push Docker image
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/${{ secrets.MODEL_NAME }}:${{ github.sha }}
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Run base httpd container
+        run: docker run -d --name http_base httpd
+
+      - name: Copy Angular build files to container
+        run: docker cp docs/. http_base:/usr/local/apache2/htdocs
+
+      - name: Commit docker image with SHA tag
+        run: docker commit --change "ENV MODEL_NAME http_base" http_base ${{ secrets.DOCKER_USER }}/frontend:${{ github.sha }}
+
+      - name: Tag image as latest
+        run: docker tag ${{ secrets.DOCKER_USER }}/mycv:${{ github.sha }} ${{ secrets.DOCKER_USER }}/frontend:latest
+
+      - name: Push docker images (SHA and latest)
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/frontend:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/frontend:latest
+
+      - name: Clean up container
+        run: docker rm -f http_base || true
