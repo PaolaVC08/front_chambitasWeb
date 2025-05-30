@@ -32,7 +32,7 @@ export class EmailVerificationPage implements OnInit, OnDestroy {
           this.mensaje = res.message || 'Cuenta verificada correctamente.';
           setTimeout(() => {
             this.router.navigate(['/login']);
-          }, 3000);
+          }, 5000);
         },
         error: (err) => {
           this.mensaje = err.error?.message || 'Token inválido o expirado.';
@@ -45,14 +45,4 @@ export class EmailVerificationPage implements OnInit, OnDestroy {
     document.body.classList.remove('auth-background');
   }
 
-  reenviarCorreo() {
-    this.authService.reenviarCorreo().subscribe({
-      next: (res: any) => {
-        this.mensaje = res.message || 'Correo reenviado correctamente.';
-      },
-      error: (err) => {
-        this.mensaje = err.error?.message || 'Error al reenviar el correo.';
-      }
-    });
-  }
 }
