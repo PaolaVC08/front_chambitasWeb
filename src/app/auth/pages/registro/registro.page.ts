@@ -54,9 +54,6 @@ form = this.fb.group({
         next: res => {
           const msg = res.message || 'Registro exitoso. Revisa tu correo.';
           alert(msg);
-          setTimeout(() => {
-            this.router.navigate(['/email-verification']);
-          }, 3000);
         },
         error: err => {
           const errorMsg = err.error?.message || 'Error en el registro';
