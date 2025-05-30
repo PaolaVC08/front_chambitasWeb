@@ -44,7 +44,7 @@ jobs:
         run: docker commit --change "ENV MODEL_NAME http_base" http_base ${{ secrets.DOCKER_USER }}/frontend:${{ github.sha }}
 
       - name: Tag image as latest
-        run: docker tag ${{ secrets.DOCKER_USER }}/mycv:${{ github.sha }} ${{ secrets.DOCKER_USER }}/frontend:latest
+        run: docker tag ${{ secrets.DOCKER_USER }}/frontend:${{ github.sha }} ${{ secrets.DOCKER_USER }}/frontend:latest
 
       - name: Push docker images (SHA and latest)
         run: |
