@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
+import { FormValidator } from '../../../validators/form-validator';
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -12,8 +13,9 @@ import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
   styleUrl: './registro.page.css'
 })
 export class RegistroPage {
- 
-  maxDate: string;
+ maxDate: String;
+ tipoUsuario: string = '';
+
 ngOnInit() {
     document.body.classList.add('auth-background');
   }
@@ -22,24 +24,27 @@ ngOnInit() {
     document.body.classList.remove('auth-background');
   }
 
-form = this.fb.group({
-    nombre: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+( [A-Z][a-z]+)*$/)]],
-    apellidoPaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
-    apellidoMaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
-    fechaNacimiento: ['', Validators.required],
+  form = this.fb.group({
+    nombre: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+    apellidoPaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+    apellidoMaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+    fechaNacimiento: ['', [Validators.required, FormValidator.edadValidator()]],
     tipoUsuario: ['', Validators.required],
-    correo: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@gmail\.com$/) ]],
-    contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/)]]
+    correo: ['', [Validators.required, FormValidator.correoValidator()]],
+    contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), FormValidator.contraseñaValidator()]],
+    profesion: [''],
+    zona: ['']
   });
 
   constructor(private fb: FormBuilder, 
               private authService: AuthService,
-              private router: Router)
-             {
-              const today = new Date();
-              const birthDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-              this.maxDate = birthDate.toISOString().split('T')[0];
-             }
+              private router: Router){
+                const today = new Date();
+                this.maxDate = today.toISOString().split('T')[0];
+              }
+  onTipoUsuarioChange(event: any): void {
+    this.tipoUsuario = event.target.value;
+  }
   onSubmit() {
 
      if (this.form.valid) {
@@ -50,8 +55,9 @@ form = this.fb.group({
         apMaterno: formValue.apellidoMaterno,
         fechaNacimiento: formValue.fechaNacimiento,
         correo: formValue.correo,
-        password: formValue.contraseña
-         /*=== 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE'*/,//ya no le mando el rol, solo va a servir este combo box para traer la info extra
+        password: formValue.contraseña,
+        profesion: formValue.profesion,
+        zona: formValue.zona 
       };
       const tipoCuentaTemp=formValue.tipoUsuario;
       
@@ -63,7 +69,7 @@ form = this.fb.group({
             alert(msg);
           },
           error: err => {
-            const errorMsg = err.error?.message || 'Error en el registro de Profesionista';
+            const errorMsg = err.error?.message ;
             alert(errorMsg);
           }
         });

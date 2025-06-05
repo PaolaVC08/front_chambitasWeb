@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
+import { FormValidator } from '../../../validators/form-validator';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,7 +23,7 @@ export class LoginPage {
   }
 
     form = this.fb.group({
-    correo: ['', [Validators.required, Validators.email]],
+    correo: ['', [Validators.required, FormValidator.correoValidator()]],
     contraseña: ['', Validators.required]
   });
 

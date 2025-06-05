@@ -22,16 +22,22 @@
     Todos los campos del nombre son obligatorios.
 </div>
 
-  <div class="form-group">
-    <label for="fechaNacimiento">Fecha de Nacimiento (debes tener cómo mínimo 16 años):</label>
-    <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="maxDate"/>
-    <div class="error-message" *ngIf="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched">
+<div class="form-group">
+  <label for="fechaNacimiento">Fecha de Nacimiento (debes tener cómo mínimo 16 años):</label>
+  <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="maxDate" />
+  
+  <div class="error-message" *ngIf="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched">
+    <div *ngIf="form.get('fechaNacimiento')?.errors?.['required']">
       La fecha de nacimiento es obligatoria.
     </div>
+    <div *ngIf="form.get('fechaNacimiento')?.errors?.['edadInsuficiente']">
+      Debes tener al menos 16 años.
+    </div>
   </div>
+</div>
 
   <div class="form-group">
-    <select id="tipoUsuario" formControlName="tipoUsuario">
+    <select id="tipoUsuario" formControlName="tipoUsuario" (change)="onTipoUsuarioChange($event)">
       <option value="" disabled selected>Selecciona un tipo de Usuario</option>
       <option>Cuenta Profesional</option>
       <option>Cuenta Cliente</option>
@@ -41,12 +47,24 @@
     </div>
   </div>
 
+  <div class="form-group" *ngIf="tipoUsuario === 'Cuenta Profesional'">
+    <label for="profesion">Profesion:</label>
+    <input type="text" id="profesion" formControlName="profesion" placeholder="Profesion del profesional">
+  </div>
+  
+  <div class="form-group" *ngIf="tipoUsuario === 'Cuenta Profesional'">
+    <label for="zona">Zona:</label>
+    <input type="text" id="zona" formControlName="zona" placeholder="Zona donde trabaja el profesional">
+  </div>
+
   <div class="form-group">
-    <input type="email" placeholder="Correo electrónico" id="correo" formControlName="correo" />
-    <div class="error-message" *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
+    <input type="email" placeholder="correo@gmail.com" id="correo" formControlName="correo" />
+    <div class="error-message" *ngIf="form.get('correo')?.touched && form.get('correo')?.invalid">
       Ingresa un correo electrónico válido.
     </div>
-    <div class="error-message" *ngIf="form.get('correo')?.errors?.['pattern']">El correo debe ser de Gmail</div>
+    <div class="error-message" *ngIf="form.get('correo')?.touched && form.get('correo')?.errors?.['invalidCorreo']">
+      El correo debe tener dominio gmail
+    </div>
   </div>
 
   <div class="form-group">
