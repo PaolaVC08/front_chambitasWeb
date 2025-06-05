@@ -13,6 +13,7 @@ import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
 })
 export class RegistroPage {
  
+  maxDate: string;
 ngOnInit() {
     document.body.classList.add('auth-background');
   }
@@ -34,10 +35,15 @@ form = this.fb.group({
   constructor(private fb: FormBuilder, 
               private authService: AuthService,
               private router: Router)
-             {}
-  onSubmit() {
-     if (this.form.valid) {
+             {
+              const today = new Date();
+              const birthDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+    this.maxDate = birthDate.toISOString().split('T')[0];
 
+             }
+  onSubmit() {
+
+     if (this.form.valid) {
       const formValue = this.form.value;
         const userRequestDTO = {
         nombre: formValue.nombre,
@@ -46,7 +52,7 @@ form = this.fb.group({
         fechaNacimiento: formValue.fechaNacimiento,
         correo: formValue.correo,
         password: formValue.contraseña,
-        tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',
+        tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',//ya no le mando el rol, solo va a servir este combo box para traer la info extra
         //fotoPerfilB64: ''
       };
       
@@ -62,4 +68,12 @@ form = this.fb.group({
       });
     }
   }
+
+  capitalizeFirstLetter(event: any): void {
+    let value = event.target.value;
+    // Convierte la primera letra a mayúscula y el resto a minúsculas
+    value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    event.target.value = value;
+  }
+  
 }
