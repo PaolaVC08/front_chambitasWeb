@@ -23,6 +23,9 @@ export class AuthService {
   signup(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, userData);
   }
+  signupProfesional(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup/profesionista`, userData);
+  }
   login(credentials: { email: string; password: string }) {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }

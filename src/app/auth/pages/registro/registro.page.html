@@ -46,6 +46,7 @@
     <div class="error-message" *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
       Ingresa un correo electrónico válido.
     </div>
+    <div class="error-message" *ngIf="form.get('correo')?.errors?.['pattern']">El correo debe ser de Gmail</div>
   </div>
 
   <div class="form-group">

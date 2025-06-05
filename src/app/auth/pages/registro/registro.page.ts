@@ -28,7 +28,7 @@ form = this.fb.group({
     apellidoMaterno: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]+$/)]],
     fechaNacimiento: ['', Validators.required],
     tipoUsuario: ['', Validators.required],
-    correo: ['', [Validators.required, Validators.email]],
+    correo: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@gmail\.com$/) ]],
     contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/)]]
   });
 
@@ -38,8 +38,7 @@ form = this.fb.group({
              {
               const today = new Date();
               const birthDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-    this.maxDate = birthDate.toISOString().split('T')[0];
-
+              this.maxDate = birthDate.toISOString().split('T')[0];
              }
   onSubmit() {
 
@@ -51,27 +50,40 @@ form = this.fb.group({
         apMaterno: formValue.apellidoMaterno,
         fechaNacimiento: formValue.fechaNacimiento,
         correo: formValue.correo,
-        password: formValue.contraseña,
-        tipoUsuario: formValue.tipoUsuario === 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE',//ya no le mando el rol, solo va a servir este combo box para traer la info extra
-        //fotoPerfilB64: ''
+        password: formValue.contraseña
+         /*=== 'Cuenta Profesional' ? 'PROFESIONISTA' : 'CLIENTE'*/,//ya no le mando el rol, solo va a servir este combo box para traer la info extra
       };
+      const tipoCuentaTemp=formValue.tipoUsuario;
       
-      this.authService.signup(userRequestDTO).subscribe({
-        next: res => {
-          const msg = res.message || 'Registro exitoso. Revisa tu correo.';
-          alert(msg);
-        },
-        error: err => {
-          const errorMsg = err.error?.message || 'Error en el registro';
-          alert(errorMsg);
-        }
-      });
+      if (tipoCuentaTemp=='Cuenta Profesional'){
+
+        this.authService.signupProfesional(userRequestDTO).subscribe({
+          next: res => {
+            const msg = res.message || 'Registro de Profesionista exitoso. Revisa tu correo.';
+            alert(msg);
+          },
+          error: err => {
+            const errorMsg = err.error?.message || 'Error en el registro de Profesionista';
+            alert(errorMsg);
+          }
+        });
+      }else{
+        this.authService.signup(userRequestDTO).subscribe({
+          next: res => {
+            const msg = res.message || 'Registro de Cliente exitoso. Revisa tu correo.';
+            alert(msg);
+          },
+          error: err => {
+            const errorMsg = err.error?.message || 'Error en el registro de Cliente';
+            alert(errorMsg);
+          }
+        });
+      }
     }
   }
 
   capitalizeFirstLetter(event: any): void {
     let value = event.target.value;
-    // Convierte la primera letra a mayúscula y el resto a minúsculas
     value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     event.target.value = value;
   }
