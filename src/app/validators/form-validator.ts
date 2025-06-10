@@ -40,4 +40,11 @@ export class FormValidator {
       return null;
     };
   }
+  static validarSeleccion(seleccionadas: number[]): number[] {
+    if (seleccionadas.length > 2) {
+      return seleccionadas.slice(0, 2); 
+    }
+    return seleccionadas;
+  }
+
 }

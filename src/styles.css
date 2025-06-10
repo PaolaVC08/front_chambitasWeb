@@ -701,3 +701,17 @@ option {
   cursor: pointer;
   font-size: 28px;
 }
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center; /* Alinea el campo de la contraseña y el ícono en el centro */
+}
+
+.password-container i {
+  position: relative;
+  left: 3%;
+  cursor: pointer;
+  font-size: 24px;
+}
+

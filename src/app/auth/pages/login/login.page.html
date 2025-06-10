@@ -23,12 +23,22 @@
 
     <div class="form-group">
       <label for="contraseña">Contraseña:</label>
-      <input type="password" id="contraseña" formControlName="contraseña" placeholder="Tu contraseña" />
+      <div class="password-container">
+        <input 
+          [type]="passwordVisible ? 'text' : 'password'"
+          id="contraseña" 
+          formControlName="contraseña" 
+          placeholder="Tu contraseña" />
+        
+
+        <i class="fa" [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility()" style="cursor: pointer;"></i>
+      </div>
       <div class="error-message" *ngIf="form.get('contraseña')?.touched && form.get('contraseña')?.invalid">
         <span *ngIf="form.get('contraseña')?.errors?.['required']">La contraseña es obligatoria.</span>
       </div>
     </div>
-
+    
+    
     
     <div class="form-group">
       <button type="submit" class="custom-btn" [disabled]="form.invalid">Iniciar Sesión</button>

@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
 import { FormValidator } from '../../../validators/form-validator';
+import { JwtResponse } from '../../../models/jwt-response.model';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,6 +15,8 @@ import { FormValidator } from '../../../validators/form-validator';
   styleUrl: './login.page.css'
 })
 export class LoginPage {
+
+  passwordVisible = false;
 
     ngOnInit() {
     document.body.classList.add('auth-background');
@@ -36,18 +40,33 @@ export class LoginPage {
   onSubmit() {
     if (this.form.valid) {
       const loginData = {
-      email: this.form.value.correo!,
-      password: this.form.value.contraseña!
-    };
-        this.authService.login(loginData).subscribe({
-        next: res => {
-          alert('Inicio de sesión exitoso');
-          this.router.navigate(['/home']);
+        correo: this.form.value.correo!,
+        password: this.form.value.contraseña!
+      };
+
+      this.authService.login(loginData).subscribe({
+        next: (res: JwtResponse) => {  
+          const token = res.token;
+          
+          this.authService.loginSuccess(token);
+
+         localStorage.setItem('userId', res.id.toString());
+          localStorage.setItem('userNombre', res.nombre);
+          localStorage.setItem('userCorreo', res.correo);
+          localStorage.setItem('userRoles', JSON.stringify(res.roles));
+          console.log("Inicio de sesion exitoso");
+          this.router.navigate(['/home']); 
         },
-        error: err => {
+        error: (err) => {
+          console.error('Error en el login:', err);
           alert('Credenciales incorrectas');
         }
       });
     }
   }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
 }

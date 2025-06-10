@@ -5,19 +5,25 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TopbarPage } from '../../../shared/pages/topbar/topbar.page';
 import { FormValidator } from '../../../validators/form-validator';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopbarPage],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopbarPage, FormsModule],
   templateUrl: './registro.page.html',
   styleUrl: './registro.page.css'
 })
 export class RegistroPage {
  maxDate: String;
  tipoUsuario: string = '';
-
+ categorias: any[] = [];  // Para almacenar las categorías con sus profesiones
+  seleccionadas: number[] = [];  // Para almacenar las profesiones seleccionadas
 ngOnInit() {
     document.body.classList.add('auth-background');
+    this.authService.getProfesionesAgrupadas().subscribe((data) => {
+      this.categorias = data;
+    });
   }
 
   ngOnDestroy() {
@@ -36,14 +42,17 @@ ngOnInit() {
     zona: ['']
   });
 
-  constructor(private fb: FormBuilder, 
-              private authService: AuthService,
-              private router: Router){
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router){
                 const today = new Date();
                 this.maxDate = today.toISOString().split('T')[0];
               }
+
   onTipoUsuarioChange(event: any): void {
     this.tipoUsuario = event.target.value;
+  }
+
+  onSeleccionarProfesion() {
+    this.seleccionadas = FormValidator.validarSeleccion(this.seleccionadas);
   }
   onSubmit() {
 
@@ -56,8 +65,8 @@ ngOnInit() {
         fechaNacimiento: formValue.fechaNacimiento,
         correo: formValue.correo,
         password: formValue.contraseña,
-        profesion: formValue.profesion,
-        zona: formValue.zona 
+        profesion: this.seleccionadas,
+        zona: formValue.zona
       };
       const tipoCuentaTemp=formValue.tipoUsuario;
       

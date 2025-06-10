@@ -1,37 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface SignUpRequest {
-  nombre: string;
-  apellidoPaterno: string;
-  apellidoMaterno: string;
-  fechaNacimiento: string;
-  tipoCuenta: string;
-  correo: string;
-  password: string;
-}
+import { JwtResponse } from '../../models/jwt-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://chambitas-web-api-latest.onrender.com/api';
   constructor(private http: HttpClient) { }
     
   signup(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, userData);
+    return this.http.post(`${this.apiUrl}/auth/signup`, userData);
   }
   signupProfesional(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup/profesionista`, userData);
+    return this.http.post(`${this.apiUrl}/auth/signup/profesionista`, userData);
   }
-  login(credentials: { email: string; password: string }) {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+  login(credentials: { correo: string; password: string }): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(`${this.apiUrl}/auth/login`, credentials);
   }
 
   verificarCorreo(token: string ) {
-  return this.http.post(`${this.apiUrl}/verify?token=${token}`, {});
+  return this.http.post(`${this.apiUrl}/auth/verify?token=${token}`, {});
   }
 
+  getProfesionesAgrupadas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/categorias`);
+  }
+
+  loginSuccess(token: string): void {
+    localStorage.setItem('authToken', token); 
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('authToken'); 
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+  }
 }
