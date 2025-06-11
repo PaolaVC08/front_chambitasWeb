@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CategoriasService } from '../../services/categorias/categorias.service';
 @Component({
   selector: 'app-search-page',
   standalone: true,
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './search-page.page.css'
 })
 export class SearchPagePage {
-
+ 
+  
 }

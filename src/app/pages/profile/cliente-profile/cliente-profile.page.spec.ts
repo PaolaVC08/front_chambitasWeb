@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchBarComponent } from './search-bar.component';
+import { ClienteProfileComponent } from './cliente-profile.page';
 
-describe('SearchBarComponent', () => {
-  let component: SearchBarComponent;
-  let fixture: ComponentFixture<SearchBarComponent>;
+describe('ClienteProfileComponent', () => {
+  let component: ClienteProfileComponent;
+  let fixture: ComponentFixture<ClienteProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchBarComponent]
+      imports: [ClienteProfileComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SearchBarComponent);
+    fixture = TestBed.createComponent(ClienteProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
