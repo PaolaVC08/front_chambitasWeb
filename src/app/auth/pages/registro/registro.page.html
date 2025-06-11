@@ -1,70 +1,134 @@
 <app-topbar></app-topbar>
 <div class="main-container">
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="registro-form">
-  <div class="header">
-  <h1>ChambitasWeb</h1>
-  <p>Únete a nuestra comunidad para encontrar al<br> profesional que necesites cuando lo necesites.</p>
-</div>
-  <div class="form-group full-name-row">
-   <div class="name-inputs">
-    <input type="text" placeholder="Nombre(s)"  formControlName="nombre" (input)="capitalizeFirstLetter($event)" />
-    <input type="text" placeholder="Apellido paterno" formControlName="apellidoPaterno" (input)="capitalizeFirstLetter($event)"/>
-    <input type="text" placeholder="Apellido materno" formControlName="apellidoMaterno" (input)="capitalizeFirstLetter($event)"/>
-  </div>
-  </div>
-<div class="error-message" *ngIf="(
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="registro-form">
+    <div class="header">
+      <h1>ChambitasWeb</h1>
+      <p>Únete a nuestra comunidad para encontrar al<br> profesional que necesites cuando lo necesites.</p>
+    </div>
+    <div class="form-group full-name-row">
+      <div class="name-inputs">
+        <input type="text" placeholder="Nombre" formControlName="nombre" (input)="capitalizeFirstLetter($event)" />
+        <input type="text" placeholder="Apellido paterno" formControlName="apellidoPaterno"
+          (input)="capitalizeFirstLetter($event)" />
+        <input type="text" placeholder="Apellido materno" formControlName="apellidoMaterno"
+          (input)="capitalizeFirstLetter($event)" />
+      </div>
+    </div>
+    <div class="error-message" *ngIf="(
     form.get('nombre')?.invalid && form.get('nombre')?.touched
   ) || (
     form.get('apellidoPaterno')?.invalid && form.get('apellidoPaterno')?.touched
   ) || (
     form.get('apellidoMaterno')?.invalid && form.get('apellidoMaterno')?.touched
-  )">   
-    Todos los campos del nombre son obligatorios.
-</div>
-
-  <div class="form-group">
-    <label for="fechaNacimiento">Fecha de Nacimiento (debes tener cómo mínimo 16 años):</label>
-    <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="maxDate"/>
-    <div class="error-message" *ngIf="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched">
-      La fecha de nacimiento es obligatoria.
+  )">
+      Todos los campos del nombre son obligatorios.
     </div>
-  </div>
 
-  <div class="form-group">
-    <select id="tipoUsuario" formControlName="tipoUsuario">
-      <option value="" disabled selected>Selecciona un tipo de Usuario</option>
-      <option>Cuenta Profesional</option>
-      <option>Cuenta Cliente</option>
-    </select>
-    <div class="error-message" *ngIf="form.get('tipoUsuario')?.invalid && form.get('tipoUsuario')?.touched">
-      Debes seleccionar un tipo de cuenta.
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha de Nacimiento (debes tener cómo mínimo 16 años):</label>
+      <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="maxDate" />
+
+      <div class="error-message" *ngIf="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched">
+        <div *ngIf="form.get('fechaNacimiento')?.errors?.['required']">
+          La fecha de nacimiento es obligatoria.
+        </div>
+        <div *ngIf="form.get('fechaNacimiento')?.errors?.['edadInsuficiente']">
+          Debes tener al menos 16 años.
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <input type="email" placeholder="Correo electrónico" id="correo" formControlName="correo" />
-    <div class="error-message" *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
-      Ingresa un correo electrónico válido.
+    <div class="form-group">
+      <select id="tipoUsuario" formControlName="tipoUsuario" (change)="onTipoUsuarioChange($event)">
+        <option value="" disabled selected>Selecciona un tipo de Usuario</option>
+        <option>Cuenta Profesional</option>
+        <option>Cuenta Cliente</option>
+      </select>
+      <div class="error-message" *ngIf="form.get('tipoUsuario')?.invalid && form.get('tipoUsuario')?.touched">
+        Debes seleccionar un tipo de cuenta.
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
+  <div class="form-group" *ngIf="tipoUsuario === 'Cuenta Profesional'">
+       
+    <div class="form-group">
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" formControlName="categoria" (change)="onCategoriaChange($event)">
+        <option value="" disabled selected>Selecciona una categoría</option>
+        <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombreCategoria }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="profesion1">Profesión 1:</label>
+      <select id="profesion1" formControlName="profesion1">
+        <option value="" disabled selected>Selecciona una profesion</option>
+        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion2?.id">
+          {{ prof.nombre }}
+        </option>
+      </select>
+    </div>
     
-    <input type="password" placeholder="Contraseña" id="contraseña" formControlName="contraseña" />
-    <div class="error-message" *ngIf="form.get('contraseña')?.invalid && form.get('contraseña')?.touched">
-      La contraseña debe tener entre 8 y 15 caracteres, con letras y números.
+    <div class="form-group">
+      <label for="profesion2">Profesión 2:</label>
+      <select id="profesion2" formControlName="profesion2">
+        <option value="" disabled selected>Selecciona una profesion</option>
+        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion1?.id">
+          {{ prof.nombre }}
+        </option>
+      </select>
+    </div>    
+
+    <div class="form-group">
+      <label for="zona">Zona:</label>
+      <select id="zona" formControlName="zona">
+        <option value="" disabled selected>Selecciona una zona</option>
+        <option *ngFor="let zona of zonas" [value]="zona.id">{{ zona.nombre }}</option>
+      </select>
+      <div class="error-message" *ngIf="form.get('zona')?.invalid && form.get('zona')?.touched">
+        La zona es obligatoria.
+      </div>
     </div>
   </div>
 
-  <div class="form-group">
+    <div class="form-group">
+      <input type="email" placeholder="correo@gmail.com" id="correo" formControlName="correo" />
+      <div class="error-message" *ngIf="form.get('correo')?.touched && form.get('correo')?.invalid">
+        Ingresa un correo electrónico válido.
+      </div>
+      <div class="error-message" *ngIf="form.get('correo')?.touched && form.get('correo')?.errors?.['invalidCorreo']">
+        El correo debe tener dominio gmail
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label for="contraseña">Contraseña:</label>
+      <div class="password-container">
+        <input 
+          [type]="passwordVisible ? 'text' : 'password'"
+          id="contraseña" 
+          formControlName="contraseña" 
+          placeholder="Tu contraseña" />
+        
+
+        <i class="fa" [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility()" style="cursor: pointer;"></i>
+      </div>
+
+      <div class="error-message" *ngIf="form.get('contraseña')?.invalid && form.get('contraseña')?.touched">
+        La contraseña debe tener entre 8 y 15 caracteres, con letras y números.
+      </div>
+    </div>
+
+    <div class="form-group">
       <button type="submit" class="custom-btn" [disabled]="form.invalid">Sign Up</button>
-  </div>
+    </div>
 
-  <div class="login-redirect">
+    <div class="login-redirect">
       <p>¿Ya tienes una cuenta?
-    <a routerLink="/login">Inicia sesión</a>
+        <a routerLink="/login">Inicia sesión</a>
       <p>
-  </div>
+    </div>
 
-</form>
+  </form>
 </div>
