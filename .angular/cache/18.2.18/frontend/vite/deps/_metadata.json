@@ -1,49 +1,49 @@
 {
-  "hash": "28dc55a7",
+  "hash": "a19a6dec",
   "configHash": "1ad86a69",
-  "lockfileHash": "e3479c4b",
-  "browserHash": "acff6728",
+  "lockfileHash": "d35afeea",
+  "browserHash": "f2251956",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "b237f822",
+      "fileHash": "4a4de60c",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "9a6f4a38",
+      "fileHash": "3285a7b6",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "43da881e",
+      "fileHash": "5080550b",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "fdf042ea",
+      "fileHash": "711b8bb5",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "fb0a8a18",
+      "fileHash": "a39c0fa0",
       "needsInterop": false
     },
     "@angular/platform-browser/animations/async": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
       "file": "@angular_platform-browser_animations_async.js",
-      "fileHash": "6941dc7a",
+      "fileHash": "54e1d463",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "20c48469",
+      "fileHash": "d2ecadfe",
       "needsInterop": false
     }
   },

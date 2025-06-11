@@ -12,7 +12,7 @@
           <span class="material-icons">search</span>
           <span>Search</span>
         </li>
-        <li routerLink="/profile" routerLinkActive="active">
+        <li (click)="goToProfile()" [ngClass]="{'active': isProfileActive}">
           <span class="material-icons">person</span>
           <span>Profile</span>
         </li>

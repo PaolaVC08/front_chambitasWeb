@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { Categoria } from '../../models/categoria.model';
+import { CategoriasService } from '../../services/categorias/categorias.service';
+import { Zona } from '../../models/zona.model';
+import { ZonasService } from '../../services/zonas/zonas.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -9,18 +12,42 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.page.css'
 })
 export class HomePage {
-  categorias = [
-    {
-      nombre: 'Hogar y Reparaciones',
-      profesiones: ['Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas','Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas','Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas','Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas']
-    },
-    {
-      nombre: 'Salud y Belleza',
-      profesiones: ['Estilistas', 'Masajistas', 'Manicuristas', 'Dentistas', 'Fisioterapeutas', 'Estilistas', 'Masajistas','Estilistas', 'Masajistas', 'Manicuristas', 'Dentistas', 'Fisioterapeutas', 'Estilistas', 'Masajistas','Estilistas', 'Masajistas', 'Manicuristas', 'Dentistas', 'Fisioterapeutas', 'Estilistas', 'Masajistas','Estilistas', 'Masajistas', 'Manicuristas', 'Dentistas', 'Fisioterapeutas', 'Estilistas', 'Masajistas']
-    },
-    {
-      nombre: 'Hogar y Reparaciones',
-      profesiones: ['Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas','Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas','Pintores', 'Electricistas', 'Fontaneros', 'Albañiles', 'Carpinteros', 'Pintores', 'Electricistas']
+  categorias: Categoria[] = []; 
+  zonas: Zona[] = [];
+  categoriasFiltradas: Categoria[] = [];
+  selectedCategoria: string = '';
+
+  constructor(private categoriasService: CategoriasService, private zonasService: ZonasService) {}
+
+  ngOnInit() {
+    this.categoriasService.getProfesionesAgrupadas().subscribe(
+      (data) => {
+        this.categorias = data;
+      },
+      (error) => {
+        console.error('Error al obtener las categorías:', error);
+      }
+    );
+
+    this.zonasService.getAllZonas().subscribe(
+      (data) => {
+        this.zonas = data;
+      },
+      (error) => {
+        console.error('Error al obtener las zonas:', error);
+      }
+    );
+  }
+  onCategoriaChange(event: any): void {
+    const categoriaSeleccionada = event.target.value;
+    if (categoriaSeleccionada === '') {
+     
+      this.categoriasFiltradas = this.categorias;
+    } else {
+
+      this.categoriasFiltradas = this.categorias.filter(
+        (cat) => cat.nombreCategoria === categoriaSeleccionada
+      );
     }
-  ];
+  }
 }
