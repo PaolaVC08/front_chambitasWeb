@@ -10,18 +10,10 @@ import { AuthService } from './auth/services/auth.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   title = 'frontend';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    window.onbeforeunload = () => {
-      this.authService.logout();
-    };
-  }
-  ngOnDestroy(): void {
-    window.onbeforeunload = null;
-  }
 
 }

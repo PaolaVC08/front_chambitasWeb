@@ -7,10 +7,10 @@ export class FormValidator {
   static nombreApellidoValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
-      const pattern = /^[A-Z][a-z]+( [A-Z][a-z]+)*$/;
-      return pattern.test(value) ? null : { invalidNombre: true };
-    };
+    const pattern = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$/;
+    return pattern.test(value) ? null : { invalidNombre: true };
   }
+}
 
   static correoValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -39,12 +39,6 @@ export class FormValidator {
 
       return null;
     };
-  }
-  static validarSeleccion(seleccionadas: number[]): number[] {
-    if (seleccionadas.length > 2) {
-      return seleccionadas.slice(0, 2); 
-    }
-    return seleccionadas;
   }
 
 }

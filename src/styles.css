@@ -631,7 +631,7 @@ option {
 .favorites-count {
   margin-top: 15px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 20px;
 }
 
 .profile-actions {
@@ -714,4 +714,39 @@ option {
   cursor: pointer;
   font-size: 24px;
 }
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  background-color: #111;
+  border-radius: 12px;
+}
 
+.profile-info {
+  flex: 1;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.logout-button i {
+  color: #ff4d4d;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 77, 77, 0.1);
+  color: #ff4d4d;
+}

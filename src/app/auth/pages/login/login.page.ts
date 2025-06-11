@@ -46,11 +46,12 @@ export class LoginPage {
 
       this.authService.login(loginData).subscribe({
         next: (res: JwtResponse) => {  
-          const token = res.token;
-          
-          this.authService.loginSuccess(token);
+          const token = res.accessToken;
+          const roles = res.roles;
+         
+          this.authService.loginSuccess(token, roles);
 
-         localStorage.setItem('userId', res.id.toString());
+          localStorage.setItem('userId', res.id.toString());
           localStorage.setItem('userNombre', res.nombre);
           localStorage.setItem('userCorreo', res.correo);
           localStorage.setItem('userRoles', JSON.stringify(res.roles));

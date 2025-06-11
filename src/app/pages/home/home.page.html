@@ -2,32 +2,43 @@
   <div class="categoria-filtros">
     <label>
       Categoria:
-      <select>
-        <option>Todos</option>
-        <option>Hogar y Reparaciones</option>
-        <option>Salud y Belleza</option>
-      </select>
-    </label>
-    <label>
-      Zona:
-      <select>
-        <option>Todos</option>
-        <option>Zona 1</option>
-        <option>Zona 2</option>
+      <select (change)="onCategoriaChange($event)">
+        <option value="">Todos</option>
+        <option *ngFor="let cat of categorias" [value]="cat.nombreCategoria">{{ cat.nombreCategoria }}</option>
       </select>
     </label>
   </div>
 
   <div class="categorias-lista">
-    <div *ngFor="let cat of categorias" class="categoria-block">
-      <h3 class="categoria-nombre">{{ cat.nombre }}</h3>
-
+    <div *ngFor="let cat of categoriasFiltradas" class="categoria-block">
+      <h3 class="categoria-nombre">{{ cat.nombreCategoria }}</h3>
       <div class="profesiones-carrusel">
         <div *ngFor="let prof of cat.profesiones" class="profesion-item">
           <div class="profesion-circle"></div>
-          <span class="profesion-nombre">{{ prof }}</span>
+          <span class="profesion-nombre">{{ prof.nombre }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Esto es solo para mostrar todas las categorías en caso de que no se haya filtrado ninguna -->
+  <div class="categorias-lista" *ngIf="categoriasFiltradas.length === 0">
+    <div *ngFor="let cat of categorias" class="categoria-block">
+      <h3 class="categoria-nombre">{{ cat.nombreCategoria }}</h3>
+      <div class="profesiones-carrusel">
+        <div *ngFor="let prof of cat.profesiones" class="profesion-item">
+          <div class="profesion-circle"></div>
+          <span class="profesion-nombre">{{ prof.nombre }}</span>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!--<label>
+      Zona:
+      <select>
+        <option>Todos</option>
+        <option *ngFor="let zona of zonas" [value]="zona.nombre">{{ zona.nombre }}</option>
+      </select>
+    </label>-->

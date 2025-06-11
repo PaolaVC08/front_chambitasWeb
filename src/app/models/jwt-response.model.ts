@@ -1,5 +1,5 @@
 export interface JwtResponse {
-    token: string;
+    accessToken: string;
     type: string;
     id: number;
     nombre: string;
