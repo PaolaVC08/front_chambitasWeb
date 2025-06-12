@@ -9,14 +9,14 @@ import { Observable } from 'rxjs';
 export class PerfilProfesionistaService {
   private apiUrl = 'https://chambitas-web-api-latest.onrender.com/api/perfilprofesionista';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  obtenerPerfil(id: number): Observable<Profesionista> {
+  obtenerPerfil(): Observable<Profesionista> {
     const token = localStorage.getItem('authToken');
-    
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<Profesionista>(`${this.apiUrl}/${id}`, { headers });
+    return this.http.get<Profesionista>(`${this.apiUrl}/yo`, { headers });
   }
 }

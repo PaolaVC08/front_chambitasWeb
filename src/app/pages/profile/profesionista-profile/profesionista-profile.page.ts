@@ -4,6 +4,7 @@ import { Profesionista } from '../../../models/profesionista.model';
 import { PerfilProfesionistaService } from '../../../services/perfil-profesionista/perfil-profesionista.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
+
 @Component({
   selector: 'app-profesionista-profile',
   standalone: true,
@@ -13,16 +14,41 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class ProfesionistaProfilePage {
   profesionista!: Profesionista;
+  profesionesString: string = '';
   menuVisible = false;
-  
-  constructor(private perfilService: PerfilProfesionistaService, private authService: AuthService,
-    private router: Router) {}
+
+  constructor(
+    private perfilService: PerfilProfesionistaService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    const userId = Number(localStorage.getItem('userId')); 
-    this.perfilService.obtenerPerfil(userId).subscribe({
-      next: (data) => {
-        this.profesionista = data;
+    this.perfilService.obtenerPerfil().subscribe({
+      next: (data: any) => {
+        this.profesionista = {
+          id: data.id,
+          nombre: data.nombre,
+          biografia: data.biografia,
+          likes: data.likes,
+          zonas: data.zonas,
+          certificados: data.certificados,
+          educaciones: data.educaciones,
+          servicios: data.servicios,
+          roles: data.profesionistaProfesiones.map((p: any) => ({
+            id: p.profesionId,
+            nombre: p.profesionNombre
+          })),
+          mediosdeContacto: data.medioContactoResponses.map((c: any) => ({
+            id: c.idMcontacto,
+            tipoContactoId: c.tipoContactoId,
+            tipo: c.tipoContactoNombre, // opcional, para mostrar "WhatsApp"
+            valor: c.valor,
+            profesionistaId: '' // puedes quitarlo si no lo usas
+          }))
+        };
+
+        this.profesionesString = this.profesionista.roles.map(r => r.nombre).join(', ');
       },
       error: (err) => {
         console.error('Error al cargar perfil del profesionista', err);
@@ -33,20 +59,18 @@ export class ProfesionistaProfilePage {
   logout(): void {
     this.authService.logoutBackend().subscribe({
       next: (res) => {
-        console.log('Logout backend:', res);
         this.authService.logout();
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Error al cerrar sesión:', err);
         this.authService.logout();
         this.router.navigate(['/login']);
       }
     });
   }
+
   toggleMenu(): void {
     this.menuVisible = !this.menuVisible;
   }
-  
-  
 }
+
