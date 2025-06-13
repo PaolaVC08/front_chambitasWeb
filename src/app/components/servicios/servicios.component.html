@@ -1,0 +1,21 @@
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <button class="back-btn" (click)="cerrarModal()">←</button>
+
+    <label>Ponle un título a tu servicio: *</label>
+    <input type="text" [(ngModel)]="servicioEnEdicion.nombre"
+           placeholder="Ej. Mantenimiento de automóvil" />
+
+    <label>Agrega una descripción: *</label>
+    <textarea rows="4"
+              maxlength="200"
+              [(ngModel)]="servicioEnEdicion.descripcion"
+              placeholder="Máximo 200 caracteres"></textarea>
+
+    <button class="btn-agregar" (click)="guardar()">
+      {{ editando ? 'Actualizar' : 'Agregar' }}
+    </button>
+  </div>
+</div>
+
+

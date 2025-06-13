@@ -1,6 +1,5 @@
 <div class="profile-container">
   <section class="profile-header">
-
     <div class="profile-info">
       <h2 class="profile-name" *ngIf="profesionista">{{ profesionista.nombre }}</h2>
       <p class="profile-likes">❤️ Favoritos: {{ profesionista.likes }}</p>
@@ -22,9 +21,7 @@
 
   <section class="profile-section biography">
     <h3>Biografía <span class="edit-icon material-icons">edit</span></h3>
-    <p>
-      {{ profesionista.biografia }}
-    </p>
+    <p>{{ profesionista.biografia }}</p>
   </section>
 
   <section class="profile-section certificates">
@@ -47,32 +44,35 @@
 
   <hr />
 
+  <!-- Encabezado Servicios -->
+  <div class="servicios-header">
+    <h2>Servicios: {{ profesionista.servicios.length }}</h2>
+    <button class="btn-agregar-servicio" (click)="abrirModalAgregarServicio()">Agregar</button>
+  </div>
 
-<p style="color: gray; font-size: 0.9em;">
-  Servicios cargados: {{ profesionista.servicios.length }}
-</p>
+  <!-- Modal de Servicio -->
+  <app-servicios
+    *ngIf="mostrarModalServicio"
+    (cerrar)="cerrarModalServicio()"
+    (actualizarLista)="ngOnInit()"
+  ></app-servicios>
 
-<section *ngIf="profesionista?.servicios && profesionista.servicios.length > 0">
-  <section *ngFor="let servicio of profesionista.servicios" class="profile-section services">
-    <h3>{{ servicio.nombre }} <span class="edit-icon material-icons">edit</span></h3>
-    <p>Descripción:</p>
-    <p>{{ servicio.descripcion }}</p>
-
-    <div class="service-images">
-      <div *ngFor="let img of servicio.imagenesBase64" class="service-image-placeholder">
-        <img [src]="'data:image/png;base64,' + img" alt="Imagen de servicio" />
+  <!-- Lista de Servicios -->
+  <section *ngIf="profesionista?.servicios && profesionista.servicios.length > 0">
+    <div *ngFor="let servicio of profesionista.servicios" class="servicio-card">
+      <div class="servicio-card-header">
+        <h3>{{ servicio.nombre }}</h3>
+        <div class="acciones">
+          <span class="material-icons edit-icon">edit</span>
+          <span class="material-icons delete-icon">delete</span>
+        </div>
       </div>
+      <p><strong>Descripción:</strong></p>
+      <p>{{ servicio.descripcion }}</p>
     </div>
-
-    <button class="delete-service-btn">
-      <span class="material-icons">delete</span>
-    </button>
   </section>
-</section>
 
-<section *ngIf="profesionista?.servicios && profesionista.servicios.length === 0" class="profile-section services">
-  <p style="color: gray; font-style: italic;">Este profesionista aún no ha registrado servicios.</p>
-</section>
-
-
+  <section *ngIf="profesionista?.servicios && profesionista.servicios.length === 0" class="profile-section services">
+    <p style="color: gray; font-style: italic;">Este profesionista aún no ha registrado servicios.</p>
+  </section>
 </div>
