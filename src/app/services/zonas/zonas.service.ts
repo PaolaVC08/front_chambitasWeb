@@ -7,7 +7,7 @@ import { Zona } from '../../models/zona.model';
   providedIn: 'root'
 })
 export class ZonasService {
-  private apiUrl = 'https://chambitas-web-api-latest.onrender.com/api/auth/zonas';
+  private apiUrl = 'http://localhost:8080/api/auth/zonas';
 
   constructor(private http: HttpClient) { }
 

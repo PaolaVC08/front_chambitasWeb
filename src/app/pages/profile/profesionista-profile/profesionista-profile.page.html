@@ -1,60 +1,78 @@
 <div class="profile-container">
-    <section class="profile-header">
-      
-        <div class="profile-info">
-          <h2 class="profile-name" *ngIf="profesionista">{{ profesionista.nombre }}</h2>
-          <p class="profile-roles">{{ profesionista.roles.join(', ') }}</p>
-          <p class="profile-contact">
-            <span class="edit-icon material-icons">edit</span>
-          </p>
-        </div>
+  <section class="profile-header">
 
-        <button (click)="logout()" class="logout-button">
-          <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-        </button>        
-    </section>
-    
-    <section class="profile-section biography">
-      <h3>Biografía <span class="edit-icon material-icons">edit</span></h3>
-      <p>
-        {{ profesionista.biografia }}
+    <div class="profile-info">
+      <h2 class="profile-name" *ngIf="profesionista">{{ profesionista.nombre }}</h2>
+      <p class="profile-likes">❤️ Favoritos: {{ profesionista.likes }}</p>
+      <p class="profile-roles">{{ profesionesString }}</p>
+      <ul class="profile-contact" *ngIf="profesionista.mediosdeContacto.length > 0">
+        <li *ngFor="let contacto of profesionista.mediosdeContacto">
+          {{ contacto.tipo }}: {{ contacto.valor }}
+        </li>
+      </ul>
+      <p class="profile-contact">
+        <span class="edit-icon material-icons">edit</span>
       </p>
-    </section>
-  
-    <section class="profile-section certificates">
-      <h3>Certificates <span class="edit-icon material-icons">edit</span></h3>
-      <div class="certificate-item" *ngFor="let cert of profesionista?.certificados">
-        <span>{{ cert.institucion }}</span>
-        <span class="arrow material-icons">keyboard_arrow_right</span>
-        <span>{{ cert.titulo }}</span>
+    </div>
+
+    <button (click)="logout()" class="logout-button">
+      <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+    </button>
+  </section>
+
+  <section class="profile-section biography">
+    <h3>Biografía <span class="edit-icon material-icons">edit</span></h3>
+    <p>
+      {{ profesionista.biografia }}
+    </p>
+  </section>
+
+  <section class="profile-section certificates">
+    <h3>Certificados <span class="edit-icon material-icons">edit</span></h3>
+    <div class="certificate-item" *ngFor="let cert of profesionista?.certificados">
+      <span>{{ cert.institucion }}</span>
+      <span class="arrow material-icons">keyboard_arrow_right</span>
+      <span>{{ cert.titulo }}</span>
+    </div>
+  </section>
+
+  <section class="profile-section education">
+    <h3>Educación <span class="edit-icon material-icons">edit</span></h3>
+    <div class="education-item" *ngFor="let edu of profesionista?.educaciones">
+      <span>{{ edu.school }}</span> - <span>{{ edu.titulo }}</span>
+      <span class="arrow material-icons">keyboard_arrow_right</span>
+      <span>{{ edu.startDate | date:'yyyy' }} - {{ edu.endDate | date:'yyyy' }}</span>
+    </div>
+  </section>
+
+  <hr />
+
+
+<p style="color: gray; font-size: 0.9em;">
+  Servicios cargados: {{ profesionista.servicios.length }}
+</p>
+
+<section *ngIf="profesionista?.servicios && profesionista.servicios.length > 0">
+  <section *ngFor="let servicio of profesionista.servicios" class="profile-section services">
+    <h3>{{ servicio.nombre }} <span class="edit-icon material-icons">edit</span></h3>
+    <p>Descripción:</p>
+    <p>{{ servicio.descripcion }}</p>
+
+    <div class="service-images">
+      <div *ngFor="let img of servicio.imagenesBase64" class="service-image-placeholder">
+        <img [src]="'data:image/png;base64,' + img" alt="Imagen de servicio" />
       </div>
-    </section>
-  
-    <section class="profile-section education">
-      <h3>Education <span class="edit-icon material-icons">edit</span></h3>
-      <div class="education-item" *ngFor="let edu of profesionista?.educacion">
-        <span>{{ edu.school }}</span> - <span>{{ edu.titulo }}</span>
-        <span class="arrow material-icons">keyboard_arrow_right</span>
-        <span>{{ edu.startDate | date:'yyyy' }} - {{ edu.endDate | date:'yyyy' }}</span>
-      </div>
-    </section>
-  
-    <hr />
-  
-    <section *ngFor="let servicio of profesionista?.servicios" class="profile-section services">
-        <h3>{{ servicio.nombre }} <span class="edit-icon material-icons">edit</span></h3>
-        <p>Descripción:</p>
-        <p>
-          {{ servicio.descripcion }}
-        </p>
-        <div class="service-images">
-          <div *ngFor="let img of servicio.imagenesBase64" class="service-image-placeholder">
-            <img [src]="'data:image/png;base64,' + img" alt="Imagen de servicio" />
-          </div>
-        </div>
-        <button class="delete-service-btn">
-          <span class="material-icons">delete</span>
-        </button>
-      </section>      
-  </div>
-  
+    </div>
+
+    <button class="delete-service-btn">
+      <span class="material-icons">delete</span>
+    </button>
+  </section>
+</section>
+
+<section *ngIf="profesionista?.servicios && profesionista.servicios.length === 0" class="profile-section services">
+  <p style="color: gray; font-style: italic;">Este profesionista aún no ha registrado servicios.</p>
+</section>
+
+
+</div>
