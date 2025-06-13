@@ -87,7 +87,7 @@
       <label for="profesion1">Profesión 1:</label>
       <select id="profesion1" formControlName="profesion1">
         <option value="" disabled selected>Selecciona una profesion</option>
-        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion2?.id">
+        <option *ngFor="let prof of profesiones" [value]="prof.idProfesion" [disabled]="prof.idProfesion === selectedProfesion2?.id">
           {{ prof.nombre }}
         </option>
       </select>
@@ -97,7 +97,7 @@
       <label for="profesion2">Profesión 2:</label>
       <select id="profesion2" formControlName="profesion2">
         <option value="" disabled selected>Selecciona una profesion</option>
-        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion1?.id">
+        <option *ngFor="let prof of profesiones" [value]="prof.idProfesion" [disabled]="prof.idProfesion === selectedProfesion1?.id">
           {{ prof.nombre }}
         </option>
       </select>

@@ -10,9 +10,9 @@ import { Categoria } from '../../../models/categoria.model';
 import { CategoriasService } from '../../../services/categorias/categorias.service'; 
 import { ZonasService } from '../../../services/zonas/zonas.service';
 import { Zona } from '../../../models/zona.model';
-import { Profesion } from '../../../models/profesion.model';
 import { ClienteRequestDTO } from '../../../models/cliente-request.dto';
 import { ProfesionistaRequestDTO } from '../../../models/profesionista-request.dto';
+import { MedioContacto } from '../../../models/MedioContacto.model';
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -24,7 +24,7 @@ export class RegistroPage {
   maxDate: String;
   tipoUsuario: string = '';
   categorias: Categoria[] = []; 
-  profesiones: Profesion[] = []; 
+  profesiones: any[] = []; 
   zonas: Zona[] = [];
   selectedProfesion1: any; 
   selectedProfesion2: any;
@@ -119,26 +119,33 @@ onSubmit() {
   
     if (tipoCuentaTemp === 'Cuenta Profesional') {
       const profesionesSeleccionadas: number[] = [];
-  
-      if (this.selectedProfesion1) {
-        profesionesSeleccionadas.push(this.selectedProfesion1.id);
-      }
-      if (this.selectedProfesion2) {
-        profesionesSeleccionadas.push(this.selectedProfesion2.id);
-      }
-  
+      const medioContacto: MedioContacto = {
+        tipoContactoId: Number(formValue.tipoContacto),
+        valor: String(formValue.valorContacto)
+      };
+      
+      const profesion1Id = this.form.value.profesion1;
+      const profesion2Id = this.form.value.profesion2;
+
+      if (profesion1Id) profesionesSeleccionadas.push(+profesion1Id);
+      if (profesion2Id) profesionesSeleccionadas.push(+profesion2Id);
+
+
       const profesionistaDTO: ProfesionistaRequestDTO = {
         nombre: formValue.nombre!,
         apPaterno: formValue.apellidoPaterno!,
         apMaterno: formValue.apellidoMaterno!,
         fechaNacimiento: formValue.fechaNacimiento!,
         correo: formValue.correo!,
-        tipoUsuario: "profesional",
+        tipoUsuario: "PROFESIONISTA",
         password: formValue.contraseña!,
         profesionesIds: profesionesSeleccionadas!,
         zonaId: formValue.zona!,
-        biografia: "Biografía temporal"
+        biografia: "Biografía temporalkkkkk",
+        medioContactos: [medioContacto]
       };
+      console.log(profesionistaDTO);
+
   
       this.authService.signupProfesional(profesionistaDTO).subscribe({
         next: res => {
@@ -159,6 +166,7 @@ onSubmit() {
         tipoUsuario:"cliente",
         password: formValue.contraseña!,
       };
+      console.log(clienteDTO);
   
       this.authService.signup(clienteDTO).subscribe({
         next: res => {
@@ -183,7 +191,7 @@ onSubmit() {
         this.profesiones = profesiones;
         this.form.get('profesion1')?.enable();
         this.form.get('profesion2')?.enable();
-       
+        console.log(profesiones)
       },
       (error) => {
         console.error('Error al obtener las profesiones:', error);

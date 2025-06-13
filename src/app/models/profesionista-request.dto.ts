@@ -1,3 +1,5 @@
+import { MedioContacto } from "./MedioContacto.model";
+
 export interface ProfesionistaRequestDTO {
     nombre: string;
     apPaterno: string;
@@ -9,5 +11,6 @@ export interface ProfesionistaRequestDTO {
     profesionesIds: number[];
     zonaId: string;
     biografia: string;
+    medioContactos: MedioContacto[];
   }
   
