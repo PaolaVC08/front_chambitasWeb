@@ -22,7 +22,6 @@ export class ProfesionistaProfilePage {
   profesionista!: Profesionista;
   profesionesString: string = '';
   menuVisible = false;
-  mostrarModalServicio = false;
   mostrarModalBiografia = false;
   biografiaTemp: string = '';
 
