@@ -63,75 +63,84 @@ ngOnInit() {
     document.body.classList.remove('auth-background');
   }
 
-  form = this.fb.group({
-    nombre: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
-    apellidoPaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
-    apellidoMaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
-    fechaNacimiento: ['', [Validators.required, FormValidator.edadValidator()]],
-    tipoUsuario: ['', Validators.required],
-    correo: ['', [Validators.required, FormValidator.correoValidator()]],
-    contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), FormValidator.contraseñaValidator()]],
-    categoria: ['', Validators.required],
-    profesion1: ['', Validators.required],
-    profesion2: [''],
-    zona: ['', Validators.required],
-  });
+form = this.fb.group({
+  nombre: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+  apellidoPaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+  apellidoMaterno: ['', [Validators.required, FormValidator.nombreApellidoValidator()]],
+  fechaNacimiento: ['', [Validators.required, FormValidator.edadValidator()]],
+  tipoUsuario: ['', Validators.required],
+  correo: ['', [Validators.required, FormValidator.correoValidator()]],
+  contraseña: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), FormValidator.contraseñaValidator()]],
+  categoria: ['', Validators.required],
+  profesion1: ['', Validators.required],
+  profesion2: [''],
+  zona: ['', Validators.required],
 
+  // medios de contacto
+  tipoContacto: ['', Validators.required], // ID del tipo: 1=WhatsApp, 2=Correo, etc.
+  valorContacto: ['', Validators.required] // Valor como teléfono o email
+});
   onTipoUsuarioChange(event: any): void {
     this.tipoUsuario = event.target.value;
   }
-  onSubmit() {
 
-     if (this.form.valid) {
-      const formValue = this.form.value;
-      const profesionesSeleccionadas = [];
+onSubmit() {
+  if (this.form.valid) {
+    const formValue = this.form.value;
+    const profesionesSeleccionadas = [];
 
-      if (this.selectedProfesion1) {
-        profesionesSeleccionadas.push(this.selectedProfesion1.id);
-      }
-      if (this.selectedProfesion2) {
-        profesionesSeleccionadas.push(this.selectedProfesion2.id);
-      }
-    
-        const userRequestDTO = {
-        nombre: formValue.nombre,
-        apPaterno: formValue.apellidoPaterno,
-        apMaterno: formValue.apellidoMaterno,
-        fechaNacimiento: formValue.fechaNacimiento,
-        correo: formValue.correo,
-        password: formValue.contraseña,
-        profesionesIds: profesionesSeleccionadas,
-        zona: formValue.zona,
-        biografia: "jaskdajsdkajsdasdks",
-      };
-      const tipoCuentaTemp=formValue.tipoUsuario;
-      
-      if (tipoCuentaTemp=='Cuenta Profesional'){
+    if (this.selectedProfesion1) {
+      profesionesSeleccionadas.push(this.selectedProfesion1.id);
+    }
+    if (this.selectedProfesion2) {
+      profesionesSeleccionadas.push(this.selectedProfesion2.id);
+    }
 
-        this.authService.signupProfesional(userRequestDTO).subscribe({
-          next: res => {
-            const msg = res.message || 'Registro de Profesionista exitoso. Revisa tu correo.';
-            alert(msg);
-          },
-          error: err => {
-            const errorMsg = err.error?.message ;
-            alert(errorMsg);
-          }
-        });
-      }else{
-        this.authService.signup(userRequestDTO).subscribe({
-          next: res => {
-            const msg = res.message || 'Registro de Cliente exitoso. Revisa tu correo.';
-            alert(msg);
-          },
-          error: err => {
-            const errorMsg = err.error?.message || 'Error en el registro de Cliente';
-            alert(errorMsg);
-          }
-        });
-      }
+    const medioContacto = {
+      tipoContactoId: formValue.tipoContacto,
+      valor: formValue.valorContacto
+    };
+
+    const userRequestDTO = {
+      nombre: formValue.nombre,
+      apPaterno: formValue.apellidoPaterno,
+      apMaterno: formValue.apellidoMaterno,
+      fechaNacimiento: formValue.fechaNacimiento,
+      correo: formValue.correo,
+      password: formValue.contraseña,
+      profesionesIds: profesionesSeleccionadas,
+      zonaId: formValue.zona,
+      biografia: "Soy un profesionista bueno.",
+      tipoUsuario: formValue.tipoUsuario,
+      medioContactos: [medioContacto]
+    };
+
+    // Registro
+    if (formValue.tipoUsuario === 'Cuenta Profesional') {
+      this.authService.signupProfesional(userRequestDTO).subscribe({
+        next: res => {
+          const msg = res.message || 'Registro de Profesionista exitoso. Revisa tu correo.';
+          alert(msg);
+        },
+        error: err => {
+          const errorMsg = err.error?.message || 'Error en el registro';
+          alert(errorMsg);
+        }
+      });
+    } else {
+      this.authService.signup(userRequestDTO).subscribe({
+        next: res => {
+          const msg = res.message || 'Registro de Cliente exitoso. Revisa tu correo.';
+          alert(msg);
+        },
+        error: err => {
+          const errorMsg = err.error?.message || 'Error en el registro';
+          alert(errorMsg);
+        }
+      });
     }
   }
+}
 
   onCategoriaChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
