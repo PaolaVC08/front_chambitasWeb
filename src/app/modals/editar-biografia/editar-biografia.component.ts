@@ -29,6 +29,7 @@ export class EditarBiografiaComponent {
   onCerrar() {
     this.cerrar.emit();
   }
+  
 }
 
 
