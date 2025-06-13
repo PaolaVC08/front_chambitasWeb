@@ -19,10 +19,30 @@
     </button>
   </section>
 
-  <section class="profile-section biography">
-    <h3>Biografía <span class="edit-icon material-icons">edit</span></h3>
-    <p>{{ profesionista.biografia }}</p>
-  </section>
+<section class="profile-section biography">
+  <h3>
+    Biografía
+   <span class="edit-icon material-icons" (click)="abrirModalBiografia()">edit</span>
+    <span class="delete-icon material-icons" (click)="eliminarBiografia()">delete</span>
+  </h3>
+  <p *ngIf="profesionista.biografia; else sinBio">
+    {{ profesionista.biografia }}
+  </p>
+  <ng-template #sinBio>
+    <p style="font-style: italic; color: gray;">Aún no se ha escrito una biografía.</p>
+  </ng-template>
+ 
+</section>
+
+
+<app-editar-biografia
+  *ngIf="mostrarModalBiografia"
+  [biografiaActual]="biografiaTemp"
+  (guardar)="guardarBiografia($event)"
+  (cerrar)="cerrarModalBiografia()"
+></app-editar-biografia>
+
+
 
   <section class="profile-section certificates">
     <h3>Certificados <span class="edit-icon material-icons">edit</span></h3>
