@@ -4,11 +4,12 @@ import { Profesionista } from '../../../models/profesionista.model';
 import { PerfilProfesionistaService } from '../../../services/perfil-profesionista/perfil-profesionista.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
+import { ServiciosComponent } from '../../../components/servicios/servicios.component';
 
 @Component({
   selector: 'app-profesionista-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ServiciosComponent],
   templateUrl: './profesionista-profile.page.html',
   styleUrl: './profesionista-profile.page.css'
 })
@@ -16,6 +17,8 @@ export class ProfesionistaProfilePage {
   profesionista!: Profesionista;
   profesionesString: string = '';
   menuVisible = false;
+  mostrarModalServicio = false;
+
 
   constructor(
     private perfilService: PerfilProfesionistaService,
@@ -72,4 +75,10 @@ export class ProfesionistaProfilePage {
   toggleMenu(): void {
     this.menuVisible = !this.menuVisible;
   }
+  abrirModalAgregarServicio() {
+  this.mostrarModalServicio = true;
+}
+cerrarModalServicio() {
+  this.mostrarModalServicio = false;
+}
 }
