@@ -37,8 +37,7 @@ export class ProfesionistaProfilePage {
     private authService: AuthService,
     private router: Router, 
     private biografiaService: BiografiaService,
-    private router: Router,
-    private servicioService: ServicioService // para eliminar
+    private servicioService: ServicioService, // para eliminar
   ) { }
 
 
@@ -132,8 +131,6 @@ export class ProfesionistaProfilePage {
   refrescarPerfil() {
     this.ngOnInit();
   }
-}
-
 
 abrirModalBiografia() {
   this.biografiaTemp = this.profesionista.biografia || '';
