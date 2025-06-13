@@ -57,10 +57,6 @@
       <select id="tipoContacto" formControlName="tipoContacto">
         <option value="" disabled selected>Selecciona un tipo de contacto</option>
         <option [value]="1">WhatsApp</option>
-        <option [value]="2">Correo</option>
-        <option [value]="3">Facebook</option>
-        <option [value]="4">Instagram</option>
-        <option [value]="5">Teléfono</option>
       </select>
       <div class="error-message" *ngIf="form.get('tipoContacto')?.invalid && form.get('tipoContacto')?.touched">
         Debes seleccionar un tipo de contacto.

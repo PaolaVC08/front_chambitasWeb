@@ -9,7 +9,7 @@ import { CategoriasService } from '../../services/categorias/categorias.service'
 })
 
 export class AuthService {
-  private apiUrl = 'https://chambitas-web-api-latest.onrender.com/api/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient, private categoriasService: CategoriasService ) { }
     
