@@ -50,6 +50,30 @@
     </div>
 
   <div class="form-group" *ngIf="tipoUsuario === 'Cuenta Profesional'">
+
+
+        <div class="form-group">
+      <label for="tipoContacto">Tipo de contacto:</label>
+      <select id="tipoContacto" formControlName="tipoContacto">
+        <option value="" disabled selected>Selecciona un tipo de contacto</option>
+        <option [value]="1">WhatsApp</option>
+        <option [value]="2">Correo</option>
+        <option [value]="3">Facebook</option>
+        <option [value]="4">Instagram</option>
+        <option [value]="5">Teléfono</option>
+      </select>
+      <div class="error-message" *ngIf="form.get('tipoContacto')?.invalid && form.get('tipoContacto')?.touched">
+        Debes seleccionar un tipo de contacto.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="valorContacto">Valor del contacto:</label>
+      <input type="text" id="valorContacto" formControlName="valorContacto" placeholder="Ej. 9361019034 o correo@ejemplo.com">
+      <div class="error-message" *ngIf="form.get('valorContacto')?.invalid && form.get('valorContacto')?.touched">
+        Este campo es obligatorio.
+      </div>
+    </div>
        
     <div class="form-group">
       <label for="categoria">Categoría:</label>
@@ -63,7 +87,7 @@
       <label for="profesion1">Profesión 1:</label>
       <select id="profesion1" formControlName="profesion1">
         <option value="" disabled selected>Selecciona una profesion</option>
-        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion2?.id">
+        <option *ngFor="let prof of profesiones" [value]="prof.idProfesion" [disabled]="prof.idProfesion === selectedProfesion2?.id">
           {{ prof.nombre }}
         </option>
       </select>
@@ -73,7 +97,7 @@
       <label for="profesion2">Profesión 2:</label>
       <select id="profesion2" formControlName="profesion2">
         <option value="" disabled selected>Selecciona una profesion</option>
-        <option *ngFor="let prof of profesiones" [value]="prof.id" [disabled]="prof.id === selectedProfesion1?.id">
+        <option *ngFor="let prof of profesiones" [value]="prof.idProfesion" [disabled]="prof.idProfesion === selectedProfesion1?.id">
           {{ prof.nombre }}
         </option>
       </select>

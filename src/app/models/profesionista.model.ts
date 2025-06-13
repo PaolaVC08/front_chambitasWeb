@@ -1,5 +1,5 @@
 import { Certificado } from "./certificado.model";
-import { Contacto } from "./contacto.model";
+import { MedioContacto } from "./MedioContacto.model";
 import { Educacion } from "./educacion.model";
 import { Profesion } from "./profesion.model";
 import { Servicio } from "./servicio.model";
@@ -10,7 +10,7 @@ export interface Profesionista{
     nombre: string;
     biografia:string;
     likes:number;
-    mediosdeContacto: Contacto[];
+    mediosdeContacto: MedioContacto[];
     zonas: Zona[];
     roles: Profesion[];
     educacion: Educacion[];

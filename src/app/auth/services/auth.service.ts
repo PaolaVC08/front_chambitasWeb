@@ -30,7 +30,7 @@ export class AuthService {
 
   loginSuccess(token: string, roles: string[]): void {
     localStorage.setItem('authToken', token); 
-    if (roles.includes('ROLE_PROFESIONISTA')) {
+    if (roles.includes('ROLE_PRO')) {
       localStorage.setItem('userType', 'profesionista');
     } else if (roles.includes('ROLE_CLIENT')) {
       localStorage.setItem('userType', 'cliente');
