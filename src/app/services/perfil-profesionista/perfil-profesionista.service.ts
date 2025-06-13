@@ -19,4 +19,5 @@ export class PerfilProfesionistaService {
     });
     return this.http.get<Profesionista>(`${this.apiUrl}/yo`, { headers });
   }
+
 }
