@@ -70,12 +70,10 @@
     <button class="btn-agregar-servicio" (click)="abrirModalAgregarServicio()">Agregar</button>
   </div>
 
-  <!-- Modal de Servicio -->
-  <app-servicios
-    *ngIf="mostrarModalServicio"
-    (cerrar)="cerrarModalServicio()"
-    (actualizarLista)="ngOnInit()"
-  ></app-servicios>
+  <!-- Modal de Servicio (crear o editar) -->
+  <app-servicios *ngIf="mostrarModalServicio" [servicioAEditar]="servicioSeleccionado" [modoEdicion]="editandoServicio"
+    (cerrar)="cerrarModalServicio()" (actualizarLista)="refrescarPerfil()"></app-servicios>
+
 
   <!-- Lista de Servicios -->
   <section *ngIf="profesionista?.servicios && profesionista.servicios.length > 0">
@@ -83,8 +81,8 @@
       <div class="servicio-card-header">
         <h3>{{ servicio.nombre }}</h3>
         <div class="acciones">
-          <span class="material-icons edit-icon">edit</span>
-          <span class="material-icons delete-icon">delete</span>
+          <span class="material-icons edit-icon" (click)="editarServicio(servicio)">edit</span>
+          <span class="material-icons delete-icon" (click)="eliminarServicio(servicio)">delete</span>
         </div>
       </div>
       <p><strong>Descripción:</strong></p>

@@ -7,6 +7,9 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { ServiciosComponent } from '../../../components/servicios/servicios.component';
 import { EditarBiografiaComponent } from '../../../modals/editar-biografia/editar-biografia.component';
 import { BiografiaService } from '../../../services/biografias/biografia.service';
+import { Servicio } from '../../../models/servicio.model';
+import { ServicioService } from '../../../services/servicio.service';
+
 
 @Component({
   selector: 'app-profesionista-profile',
@@ -24,17 +27,26 @@ export class ProfesionistaProfilePage {
   biografiaTemp: string = '';
 
 
+  // 🧩 Modal control
+  mostrarModalServicio = false;
+  editandoServicio = false;
+  servicioSeleccionado?: Servicio;
+
   constructor(
     private perfilService: PerfilProfesionistaService,
     private authService: AuthService,
     private router: Router, 
     private biografiaService: BiografiaService,
-  ) {}
+    private router: Router,
+    private servicioService: ServicioService // para eliminar
+  ) { }
+
 
   ngOnInit() {
     this.perfilService.obtenerPerfil().subscribe({
       next: (data: any) => {
         this.profesionista = {
+
           id: data.id,
           nombre: data.nombre,
           biografia: data.biografia,
@@ -42,7 +54,12 @@ export class ProfesionistaProfilePage {
           zonas: data.zonas,
           certificados: data.certificados,
           educaciones: data.educaciones,
-          servicios: data.servicios,
+          servicios: data.servicios.map((s: any) => ({
+            id: s.idServicio,
+            nombre: s.nombre,
+            descripcion: s.descripcion,
+            imagenesBase64: s.imagenesBase64 ?? []
+          })),
           roles: data.profesionistaProfesiones.map((p: any) => ({
             id: p.profesionId,
             nombre: p.profesionNombre
@@ -50,11 +67,12 @@ export class ProfesionistaProfilePage {
           mediosdeContacto: data.medioContactoResponses.map((c: any) => ({
             id: c.idMcontacto,
             tipoContactoId: c.tipoContactoId,
-            tipo: c.tipoContactoNombre, // opcional, para mostrar "WhatsApp"
+            tipo: c.tipoContactoNombre,
             valor: c.valor,
-            profesionistaId: '' // puedes quitarlo si no lo usas
+            profesionistaId: ''
           }))
         };
+
 
         this.profesionesString = this.profesionista.roles.map(r => r.nombre).join(', ');
       },
@@ -66,11 +84,11 @@ export class ProfesionistaProfilePage {
 
   logout(): void {
     this.authService.logoutBackend().subscribe({
-      next: (res) => {
+      next: () => {
         this.authService.logout();
         this.router.navigate(['/login']);
       },
-      error: (err) => {
+      error: () => {
         this.authService.logout();
         this.router.navigate(['/login']);
       }
@@ -80,11 +98,40 @@ export class ProfesionistaProfilePage {
   toggleMenu(): void {
     this.menuVisible = !this.menuVisible;
   }
+
+  //Crear nuevo
   abrirModalAgregarServicio() {
-  this.mostrarModalServicio = true;
-}
-cerrarModalServicio() {
-  this.mostrarModalServicio = false;
+    this.editandoServicio = false;
+    this.servicioSeleccionado = undefined;
+    this.mostrarModalServicio = true;
+  }
+
+  //Editar
+  editarServicio(servicio: Servicio) {
+    this.editandoServicio = true;
+    this.servicioSeleccionado = servicio;
+    this.mostrarModalServicio = true;
+  }
+
+  // Eliminar
+  eliminarServicio(servicio: Servicio) {
+    if (confirm(`¿Eliminar el servicio "${servicio.nombre}"?`)) {
+      this.servicioService.eliminarServicio(servicio.id!).subscribe({
+        next: () => this.ngOnInit(),
+        error: (err) => console.error('Error al eliminar servicio:', err)
+      });
+    }
+  }
+
+  cerrarModalServicio() {
+    this.mostrarModalServicio = false;
+    this.servicioSeleccionado = undefined;
+    this.editandoServicio = false;
+  }
+
+  refrescarPerfil() {
+    this.ngOnInit();
+  }
 }
 
 
@@ -119,3 +166,4 @@ eliminarBiografia() {
   }
 }
 }
+
